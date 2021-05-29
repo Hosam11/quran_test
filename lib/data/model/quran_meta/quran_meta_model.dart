@@ -29,6 +29,7 @@ class Data {
   Pages? pages;
   Manzils? manzils;
   Juzs? juzs;
+  HizbQuarters? hizbQuarters;
 
   Data({
     this.ayahs,
@@ -47,6 +48,9 @@ class Data {
     manzils =
         json['manzils'] != null ? Manzils.fromJson(json['manzils']) : null;
     juzs = json['juzs'] != null ? Juzs.fromJson(json['juzs']) : null;
+    hizbQuarters = json['hizbQuarters'] != null
+        ? HizbQuarters.fromJson(json['hizbQuarters'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +72,9 @@ class Data {
     }
     if (juzs != null) {
       map['juzs'] = juzs?.toJson();
+    }
+    if (hizbQuarters != null) {
+      map['hizbQuarters'] = hizbQuarters?.toJson();
     }
     return map;
   }
@@ -203,6 +210,32 @@ class Sajdas {
   Sajdas({this.count, this.references});
 
   Sajdas.fromJson(dynamic json) {
+    count = json['count'];
+    if (json['references'] != null) {
+      references = [];
+      json['references'].forEach((v) {
+        references?.add(References.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['count'] = count;
+    if (references != null) {
+      map['references'] = references?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+class HizbQuarters {
+  int? count;
+  List<References>? references;
+
+  HizbQuarters({this.count, this.references});
+
+  HizbQuarters.fromJson(dynamic json) {
     count = json['count'];
     if (json['references'] != null) {
       references = [];

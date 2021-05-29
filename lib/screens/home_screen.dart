@@ -1,16 +1,23 @@
-import 'package:dropdown_search/dropdown_search.dart';
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
-import 'package:quran_test/consts/dimens.dart';
+import 'package:provider/provider.dart';
 import 'package:quran_test/consts/strings.dart';
-import 'package:quran_test/consts/styles.dart';
-import 'package:quran_test/helpers/app_helper.dart';
 import 'package:quran_test/helpers/quran_helper.dart';
+import 'package:quran_test/provider/quran_provider.dart';
 import 'package:quran_test/widgets/shared/shared_dropdown.dart';
 import 'package:quran_test/widgets/shared/shared_search_dropdown.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   var listx = [
     'zero',
     'one',
@@ -33,15 +40,22 @@ class HomeScreen extends StatelessWidget {
   var juzList = List.generate(30, (index) => index + 1);
 
   int? startJuzSelected;
+
   String? select;
+
   int? endJuzSelected;
 
-  void find() {
-    // juzList.where((evyslement) => e.)
+  QuranProvider? _quranProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _quranProvider = Provider.of<QuranProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    Fimber.i('-');
     return Scaffold(
       appBar: AppBar(title: Text(appTitle)),
       floatingActionButton: FloatingActionButton(
@@ -100,7 +114,31 @@ class HomeScreen extends StatelessWidget {
   }
 
   void onAddPressed() {
-    logger.i('buttonPressed');
-    QuranHelper.instance.getAllQuran();
+    /*
+      if juz null:
+        check if qurter null:
+          error juz must be provided
+        else: okay
+      else:
+        okay
+    */
+    Fimber.i('buttonPressed');
+    // QuranHelper.instance.getQuranFromFile();
+    Fimber.i(
+        '${_quranProvider?.quranModel != null ? 'quran data not null' : 'null'}');
+    Fimber.i(
+        '${_quranProvider?.quranMetaModel != null ? 'quran meta not null' : 'null'}');
+
+    var ayahs = QuranHelper.instance.getAyahs(
+      startQuarter: 1,
+      endQuarter: 5,
+      startJuz: 1,
+      endJuz: 1,
+      provider: _quranProvider!,
+    );
+
+    Fimber.i('ayahsLen= ${ayahs.length}');
+    // log('ayahs= \n${jsonEncode(ayahs)}');
+    Fimber.i('ayahslast= ${jsonEncode(ayahs.last)}');
   }
 }

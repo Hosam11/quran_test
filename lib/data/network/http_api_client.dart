@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart';
-import 'package:quran_test/helpers/app_helper.dart';
+import 'package:fimber/fimber.dart';
 
 class HttpApiClient {
   factory HttpApiClient() {
@@ -23,7 +18,7 @@ class HttpApiClient {
     var response = await Dio().get(path);
 
     final statusCode = response.statusCode;
-    Logger().i(
+    Fimber.i(
         'code={$statusCode}, returnedBodyType= ${response.data.runtimeType}');
     // printWrapped('$head returnedBody= ${response.data}');
     return response;

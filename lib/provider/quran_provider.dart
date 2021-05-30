@@ -19,6 +19,7 @@ class QuranProvider extends ChangeNotifier {
   int _displayedWord = 0;
   int? _maxDisplayedWord;
 
+  bool isWordAvailable = true;
   QuranProvider() {
     prepareData();
   }
@@ -64,14 +65,14 @@ class QuranProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool setDisplayedAyah() {
+  void setDisplayedAyah() {
     // ayah 5 word
     Fimber.i(
         '_displayedWord= $_displayedWord, _maxDisplayedWord= $_maxDisplayedWord');
     _displayedWord++;
     if (_displayedWord <= _maxDisplayedWord!) {
       var ayahWords = randomAyah?.text?.split(' ');
-      Fimber.i('ayahWords= $ayahWords, ayahWordsLEn= ${ayahWords?.length}');
+      Fimber.i('ayahWords= $ayahWords, ayahWordsLen= ${ayahWords?.length}');
       Fimber.i('_displayedWord= $_displayedWord');
 
       displayedAyah = ayahWords?.sublist(0, _displayedWord).join(' ');
@@ -79,14 +80,16 @@ class QuranProvider extends ChangeNotifier {
           ' displayedAyah= $displayedAyah');
 
       notifyListeners();
-      return true;
+    } else {
+      isWordAvailable = false;
     }
     notifyListeners();
-    return false;
+    // return false;
   }
 
   void resetRandomAyahData() {
     _displayedWord = 0;
     _maxDisplayedWord = null;
+    isWordAvailable = true;
   }
 }

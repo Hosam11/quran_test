@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quran_test/consts/dimens.dart';
+import 'package:quran_test/consts/fonts.dart';
 import 'package:quran_test/consts/strings.dart';
+import 'package:quran_test/consts/styles.dart';
 import 'package:quran_test/helpers/app_helper.dart';
 import 'package:quran_test/helpers/quran_helper.dart';
 import 'package:quran_test/provider/quran_provider.dart';
+import 'package:quran_test/screens/solution_screen.dart';
 import 'package:quran_test/widgets/shared/shared_search_dropdown.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,10 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Fimber.i('-');
     return Scaffold(
       appBar: AppBar(title: Text(appTitle)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: onShowAnotherAyahPressed,
-        child: Icon(Icons.add),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -93,36 +93,69 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+
+            /// Show random ayah
             ElevatedButton(
               onPressed: showRandomAyahPressed,
+              style: btnStyle,
               child: Text(showRandomAyah),
             ),
+            SizedBox(height: 64),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 _updatedQuranProvider?.displayedAyah ?? '',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.green[900],
+                style: ayahStyle.copyWith(fontFamily: meQuranFont),
+              ),
+            ),
+            // no word available
+            Visibility(
+              visible: _updatedQuranProvider != null
+                  ? _updatedQuranProvider!.isWordAvailable
+                      ? false
+                      : true
+                  : false,
+              child: Padding(
+                padding: const EdgeInsets.all(mediumPadding),
+                child: Text(
+                  noMoreWord,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red[900],
+                  ),
                 ),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
+            SizedBox(height: 64),
+            // show solution/anthor word
+            Visibility(
+              visible:
+                  _updatedQuranProvider?.displayedAyah == null ? false : true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
                     onPressed: onShowAnotherAyahPressed,
+                    style: btnStyle,
                     child: Text(showAnotherAyah),
                   ),
-                ),
-                Expanded(
-                  child: ElevatedButton(
+                  // Spacer(),
+                  ElevatedButton(
                     onPressed: onShowSolutionPressed,
-                    style: ElevatedButton.styleFrom(primary: Colors.red),
-                    child: Text(showSolution),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[900],
+                      textStyle: btnTextStyle,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: mediumPadding,
+                        vertical: smallPadding,
+                      ),
+                    ),
+                    child: Text(
+                      showSolution,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -130,11 +163,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onShowSolutionPressed() {}
+  void onShowSolutionPressed() {
+    Fimber.i('-');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => SolutionScreen(
+          ayah: _quranProvider!.randomAyah!,
+        ),
+      ),
+    );
+  }
 
   void onShowAnotherAyahPressed() {
-    var isNewWord = _quranProvider?.setDisplayedAyah();
-    Fimber.i('isNewWord= $isNewWord');
+    Fimber.i('-');
+    _quranProvider?.setDisplayedAyah();
   }
 
   void getAyahs() {

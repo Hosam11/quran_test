@@ -14,17 +14,17 @@ class SharedSearchDropDown extends StatelessWidget {
     this.mHint,
   }) : super(key: key);
 
-  final List<String> mListItem;
-  final String? mSelectedValue;
+  final List<int> mListItem;
+  final int? mSelectedValue;
   final String? mLabel;
   final String? mHint;
-  final void Function(String?)? mOnChange;
+  final void Function(int?)? mOnChange;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(smallPadding),
-      child: DropdownSearch<String>(
+      child: DropdownSearch<int>(
         items: mListItem,
         label: mLabel,
         dropdownSearchDecoration: kTextFieldDecoration,

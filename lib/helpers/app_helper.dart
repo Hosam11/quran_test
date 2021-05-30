@@ -1,4 +1,5 @@
 import 'package:appspector/appspector.dart';
+import 'package:flutter/material.dart';
 
 void runAppSpector() {
   var apiKey = 'android_ZGE3YmY3MzMtODQ0NS00YmIyLThiMzQtNTAzZmZkMDkwNDJi';
@@ -22,4 +23,14 @@ void runAppSpector() {
   ];
 
   AppSpectorPlugin.run(config);
+}
+
+Future<void> showInfoDialogue({
+  required BuildContext context,
+  required String msg,
+}) {
+  return showDialog(
+    context: context,
+    builder: (_) => AlertDialog(content: Text(msg)),
+  );
 }

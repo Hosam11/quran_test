@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:fimber/fimber.dart';
 import 'package:flutter/services.dart';
@@ -33,14 +34,17 @@ class QuranHelper {
     Fimber.i('quranMetaModel= ${jsonEncode(quranMetaModel)}');
   }*/
 
-  List<AyahModel> getAyahs({
+  List<AyahModel> getAyahsByInputs({
     int? startJuz,
     int? endJuz,
     int? startQuarter,
     int? endQuarter,
     required QuranProvider provider,
   }) {
-    var ayahs = <AyahModel>[];
+    Fimber.i('startJuz= $startJuz'
+        'endJuz= $endJuz'
+        'startQuarter= $startQuarter'
+        'endQuarter= $endQuarter');
     /* Example
      1-
       start suz= 1, end = 1
@@ -58,6 +62,7 @@ class QuranHelper {
           targetAyahs = split by [0, endAyahNumber -1]
         2- else add all ayahs
     */
+    var ayahs = <AyahModel>[];
 
     var startRef;
     var endRef;
@@ -107,7 +112,7 @@ class QuranHelper {
         if (surahIndex == surahListLen - 1) {
           var ayahsRes = surahModel.ayahs?.sublist(0, endRef.ayah! - 1);
           ayahs.addAll(ayahsRes!);
-          Fimber.i('surahListLen>1,ayahsRes= ${ayahsRes.length}');
+          Fimber.i('surahListLen > 1, ayahsRes= ${ayahsRes.length}');
         } else {
           ayahs.addAll(surahModel.ayahs!);
         }
@@ -128,5 +133,12 @@ class QuranHelper {
         print('ayahNumber= ${ayahModel.number}');
       });
     });
+  }
+
+  T getRandomElement<T>(List<T> list) {
+    final random = math.Random();
+    var i = random.nextInt(list.length);
+    Fimber.i('i= $i');
+    return list[i];
   }
 }

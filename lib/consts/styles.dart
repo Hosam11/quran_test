@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quran_test/consts/dimens.dart';
+import 'package:quran_test/consts/fonts.dart';
 
 const double kFontLabelSize = 20.0;
 
@@ -16,10 +17,8 @@ const EdgeInsets kInputDecorationContentPadding = EdgeInsets.symmetric(
   horizontal: 20.0,
 );
 
-final TextStyle ayahStyle = TextStyle(
-  fontSize: kFontLabelSize,
-  color: Colors.green[900],
-);
+final TextStyle ayahStyle =
+    TextStyle(fontSize: 25, color: Colors.green[900], fontFamily: meQuranFont);
 
 final TextStyle btnTextStyle = TextStyle(
   fontSize: kFontLabelSize,

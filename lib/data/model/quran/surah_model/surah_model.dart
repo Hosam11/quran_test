@@ -13,13 +13,14 @@ class SurahModel extends Equatable {
   final String? revelationType;
   final List<AyahModel>? ayahs;
 
-  SurahModel(
-      {this.number,
-      this.name,
-      this.englishName,
-      this.englishNameTranslation,
-      this.revelationType,
-      this.ayahs});
+  SurahModel({
+    this.number,
+    this.name,
+    this.englishName,
+    this.englishNameTranslation,
+    this.revelationType,
+    this.ayahs,
+  });
 
   factory SurahModel.fromJson(Map<String, dynamic> json) =>
       _$SurahModelFromJson(json);

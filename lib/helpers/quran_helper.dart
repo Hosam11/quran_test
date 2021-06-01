@@ -20,32 +20,7 @@ class QuranHelper {
 
   final QuranRestRepo _quranRestRepo = QuranRestRepo();
 
-  /* Future<void> getQuranFromFile() async {
-    final quranPages = await rootBundle.loadString(allQuranFile);
-    var quranModel =
-        QuranModel.fromJson(jsonDecode(quranPages) as Map<String, dynamic>);
-    Fimber.i('quranModel= ${jsonEncode(quranModel)}');
-  }
-
-  Future<void> getQuranMetaFromFile() async {
-    final quranMetaStr = await rootBundle.loadString(quranMetaFile);
-    var quranMetaModel = QuranMetaModel.fromJson(
-        jsonDecode(quranMetaStr) as Map<String, dynamic>);
-    Fimber.i('quranMetaModel= ${jsonEncode(quranMetaModel)}');
-  }*/
-
-  List<AyahModel> getAyahsByInputs({
-    int? startJuz,
-    int? endJuz,
-    int? startQuarter,
-    int? endQuarter,
-    required QuranProvider provider,
-  }) {
-    Fimber.i('startJuz= $startJuz'
-        'endJuz= $endJuz'
-        'startQuarter= $startQuarter'
-        'endQuarter= $endQuarter');
-    /* Example
+  /* Example
      1-
       start suz= 1, end = 1
       get firstJuz= juz[start-1=0]  {surah=1 , ayah 1}
@@ -62,6 +37,18 @@ class QuranHelper {
           targetAyahs = split by [0, endAyahNumber -1]
         2- else add all ayahs
     */
+  List<AyahModel> getAyahsByInputs({
+    int? startJuz,
+    int? endJuz,
+    int? startQuarter,
+    int? endQuarter,
+    required QuranProvider provider,
+  }) {
+    Fimber.i('startJuz= $startJuz'
+        'endJuz= $endJuz'
+        'startQuarter= $startQuarter'
+        'endQuarter= $endQuarter');
+
     var ayahs = <AyahModel>[];
 
     var startRef;

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math' as math;
 import 'package:fimber/fimber.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +13,7 @@ class QuranProvider extends ChangeNotifier {
   QuranModel? quranModel;
   QuranMetaModel? quranMetaModel;
   List<AyahModel> ayahModels = [];
+  List<AyahModel> hizbQuModels = [];
 
   AyahModel? randomAyah;
   String? displayedAyah;
@@ -22,6 +23,33 @@ class QuranProvider extends ChangeNotifier {
   bool isWordAvailable = true;
   QuranProvider() {
     prepareData();
+  }
+
+  Future<void> prepareData() async {
+    await getQuranData();
+    await getQuranMetaData();
+    getAyahQuarterModels();
+  }
+
+  void getAyahQuarterModels() {
+    hizbQuModels = quranMetaModel!.data!.hizbQuarters!.references!
+        .map((r) => quranModel!.data!.surahs![r.surah! - 1].ayahs![r.ayah! - 1])
+        .toList();
+
+    var ayahsLenList = quranMetaModel!.data!.hizbQuarters!.references!
+        .map((References r) =>
+            quranModel!.data!.surahs![r.surah! - 1].ayahs![r.ayah! - 1])
+        .toList()
+        .map((e) => e.text!.length)
+        .toList();
+
+    var minLen = ayahsLenList.reduce(math.min);
+
+    Fimber.i('\nayahQuarterModelsLen = ${hizbQuModels.length},'
+        '\nfirst= ${hizbQuModels.first}'
+        '\nlast= ${hizbQuModels.last}'
+        '\ninLen= $minLen');
+    notifyListeners();
   }
 
   Future<void> getQuranData() async {
@@ -41,12 +69,6 @@ class QuranProvider extends ChangeNotifier {
     Fimber.i(
         'quranMetaReferencesLen= ${quranMetaModel!.data!.hizbQuarters!.references!.length}');
     // notifyListeners();
-  }
-
-  Future<void> prepareData() async {
-    await getQuranData();
-    await getQuranMetaData();
-    // getAyahQuarterModels();
   }
 
   void setupRandomAyah(List<AyahModel> ayahs) {

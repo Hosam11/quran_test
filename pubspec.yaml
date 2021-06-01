@@ -18,9 +18,10 @@ dependencies:
   equatable: ^2.0.2
   fimber: ^0.6.1
   json_serializable: ^4.1.2
-  appspector: ^0.7.0
   dropdown_search: ^0.6.1
   provider: ^5.0.0
+  google_fonts: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -34,3 +35,9 @@ flutter:
 
   assets:
     - assets/files/
+
+  fonts:
+    - family: Me Quran
+      fonts:
+        - asset: fonts/me_quran.ttf
+

@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: mediumPadding),
             Row(
               children: [
                 Expanded(
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mListItem: juzList,
                     mSelectedValue: SelectedStartJuz,
                     mOnChange: (newVal) => SelectedStartJuz = newVal,
-                    mHint: chooseStartJuz,
+                    mHint: chooseJuz,
                   ),
                 ),
                 Expanded(
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mListItem: juzList,
                     mSelectedValue: SelectedEndJuz,
                     mOnChange: (newVal) => SelectedEndJuz = newVal,
-                    mHint: chooseEndJuz,
+                    mHint: chooseJuz,
                   ),
                 ),
               ],
@@ -93,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            SizedBox(height: 36),
 
             /// Show random ayah
             ElevatedButton(
@@ -105,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 _updatedQuranProvider?.displayedAyah ?? '',
-                style: ayahStyle.copyWith(fontFamily: meQuranFont),
+                style: ayahStyle,
               ),
             ),
             // no word available
@@ -181,7 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getAyahs() {
-    Fimber.i('buttonPressed');
     // QuranHelper.instance.getQuranFromFile();
     Fimber.i(
         '${_quranProvider?.quranModel != null ? 'quran data not null' : 'null'}');

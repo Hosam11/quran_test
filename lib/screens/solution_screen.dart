@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_test/consts/dimens.dart';
 import 'package:quran_test/consts/strings.dart';
 import 'package:quran_test/consts/styles.dart';
@@ -46,8 +47,43 @@ class SolutionScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(smallestPadding),
-                child: Text(ayah.text ?? '', style: ayahStyle),
+                child: Row(
+                  children: [
+                    Text(ayahNumber, style: kLabelStyle),
+                    Text(
+                      ayah.numberInSurah != null ? '${ayah.numberInSurah}' : '',
+                      style: kValueStyle,
+                    )
+                  ],
+                ),
               ),
+              Padding(
+                  padding: const EdgeInsets.all(smallestPadding),
+                  child: Text(
+                    ayah.text != null ? '\u202E${ayah.text} ' : '',
+                    textAlign: TextAlign.justify,
+                    style: ayahStyle,
+                  ) /*RichText(
+                  textAlign: TextAlign.justify,
+                  text: TextSpan(
+                    text: '\u202E${ayah.text}',
+                    style: ayahStyle,
+                    children: [
+                      TextSpan(
+                        // text: ' \uFD3F${ayah.numberInSurah}\uFD3E',
+                        text: ' ${ayah.numberInSurah}',
+                        style: GoogleFonts.amiri(),
+                      )
+                    ],
+                  ),
+
+                  */ /*child: Text(
+                      ayah.text != null
+                          ? '${ayah.text} \uFD3F${ayah.number}\uFD3E'
+                          : '',
+                      style: ayahStyle),*/ /*
+                ),*/
+                  ),
             ],
           ),
         ),

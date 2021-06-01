@@ -38,6 +38,19 @@ class AyahModel extends Equatable {
   @override
   bool get stringify => true;
 
+  String? calcAyahWithQuarter() {
+    var ayahWordList = text?.split(' ');
+    var halfLen = (ayahWordList!.length / 2).round();
+
+    var firAyahs = ayahWordList.sublist(0, halfLen + 1);
+    return '$hizbQuarter - ${firAyahs.join(' ')}';
+  }
+
+/*
+  @override
+  String toString() => calcAyahWithQuarter() ?? 'empty to String';
+*/
+
   @override
   List<Object?> get props => [
         number,

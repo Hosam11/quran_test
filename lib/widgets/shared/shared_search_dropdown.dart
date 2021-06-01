@@ -27,14 +27,16 @@ class SharedSearchDropDown extends StatelessWidget {
       child: DropdownSearch<int>(
         items: mListItem,
         label: mLabel,
-        dropdownSearchDecoration: kTextFieldDecoration,
+        dropdownSearchDecoration:
+            kTextFieldDecoration.copyWith(labelText: mLabel),
         hint: mHint,
         showSearchBox: true,
         onChanged: mOnChange,
         selectedItem: mSelectedValue,
         showAsSuffixIcons: true,
-        searchBoxDecoration: kTextFieldDecoration,
+        searchBoxDecoration: kTextFieldDecoration.copyWith(labelText: mHint),
         emptyBuilder: (_, String? c) => Center(child: Text(entryError)),
+        showClearButton: true,
       ),
     );
   }

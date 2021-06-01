@@ -9,7 +9,7 @@ import 'package:quran_test/screens/home_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // runAppSpector();
-  // Fimber.plantTree(DebugTree.elapsed());
+  Fimber.plantTree(DebugTree.elapsed());
 
   runApp(QuranTestApp());
 }

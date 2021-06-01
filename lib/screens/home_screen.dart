@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 64),
-            // show solution/anthor word
+            // show solution/another word
             Visibility(
               visible:
                   _updatedQuranProvider?.displayedAyah == null ? false : true,
@@ -166,12 +166,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onShowSolutionPressed() {
-    Fimber.i('-');
+    var firstAyahQuarter = _quranProvider!
+        .hizbQuModels[_quranProvider!.randomAyah!.hizbQuarter! - 1];
+
+    Fimber.i('x= $firstAyahQuarter');
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => SolutionScreen(
           ayah: _quranProvider!.randomAyah!,
+          firstAyahQuarter: firstAyahQuarter,
         ),
       ),
     );

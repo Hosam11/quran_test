@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quran_test/consts/dimens.dart';
 import 'package:quran_test/consts/strings.dart';
 import 'package:quran_test/consts/styles.dart';
 import 'package:quran_test/data/model/quran/ayah_model/ayah_model.dart';
-import 'package:quran_test/helpers/quran_helper.dart';
+import 'package:quran_test/provider/quran_provider.dart';
 import 'package:quran_test/widgets/label_value.dart';
 
 class SolutionScreen extends StatelessWidget {
@@ -19,7 +20,9 @@ class SolutionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String ayahPreview = QuranHelper.instance.getAyahPreview(firstAyahQuarter);
+    // final ayahPreview = QuranHelper.instance.getAyahPreview(firstAyahQuarter);
+    final ayahPreview =
+        Provider.of<QuranProvider>(context).getQuarterText(ayah.hizbQuarter!);
     return Scaffold(
       appBar: AppBar(title: Text(solutionScreenTitle)),
       body: SingleChildScrollView(
@@ -36,11 +39,16 @@ class SolutionScreen extends StatelessWidget {
               // quarterLabel
               LabelValue(
                 label: quarterLabel,
+                quranFont: true,
                 value: ayah.hizbQuarter != null
                     ? '${ayah.hizbQuarter} - $ayahPreview'
                     : null,
               ),
               // ayahNumberLabel
+              LabelValue(
+                label: surahNameLabel,
+                value: Provider.of<QuranProvider>(context).surahName,
+              ),
               LabelValue(
                 label: ayahNumberLabel,
                 value:

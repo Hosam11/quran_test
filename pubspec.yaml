@@ -17,10 +17,11 @@ dependencies:
   dio: ^4.0.0
   equatable: ^2.0.2
   fimber: ^0.6.1
-  json_serializable: ^4.1.2
-  dropdown_search: ^0.6.1
-  provider: ^5.0.0
+  json_serializable: ^6.1.5
+  dropdown_search: ^2.0.1
+  provider: ^6.0.2
   google_fonts: ^2.1.0
+  in_app_update: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +36,7 @@ flutter:
 
   assets:
     - assets/files/
+    - assets/images/
 
   fonts:
     - family: Me Quran

@@ -1,10 +1,11 @@
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quran_test/consts/app_colors.dart';
 import 'package:quran_test/consts/locals.dart';
 import 'package:quran_test/consts/strings.dart';
 import 'package:quran_test/provider/quran_provider.dart';
-import 'package:quran_test/screens/home_screen.dart';
+import 'package:quran_test/screens/home/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,19 @@ class QuranTestApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: appTitle,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primaryColor: kPrimaryColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: kPrimaryColor,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: kPrimaryColor,
+          selectionColor: kPrimaryColor,
+          selectionHandleColor: kPrimaryColor,
+        ),
+        backgroundColor: kPrimaryColor,
+        scaffoldBackgroundColor: kSecondaryColor,
+      ),
       home: ChangeNotifierProvider(
         create: (BuildContext context) => QuranProvider(),
         child: HomeScreen(),

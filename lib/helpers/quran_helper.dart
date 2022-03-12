@@ -3,14 +3,10 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:fimber/fimber.dart';
-import 'package:flutter/services.dart';
-import 'package:quran_test/consts/assets.dart';
 import 'package:quran_test/data/model/quran/ayah_model/ayah_model.dart';
 import 'package:quran_test/data/model/quran/quran_data/quran_data.dart';
-import 'package:quran_test/data/model/quran/quran_model.dart';
 import 'package:quran_test/data/model/quran/surah_model/surah_model.dart';
 import 'package:quran_test/data/model/quran_meta/quran_meta_model.dart';
-import 'package:quran_test/data/quran_repo.dart';
 import 'package:quran_test/provider/quran_provider.dart';
 
 class QuranHelper {
@@ -18,8 +14,9 @@ class QuranHelper {
 
   static final QuranHelper instance = QuranHelper._();
 
-  final QuranRestRepo _quranRestRepo = QuranRestRepo();
+  int? currentSurahIndex;
 
+  // String get surahName =>
   /* Example
      1-
       start suz= 1, end = 1
@@ -37,7 +34,7 @@ class QuranHelper {
           targetAyahs = split by [0, endAyahNumber -1]
         2- else add all ayahs
     */
-  List<AyahModel> getAyahsByInputs({
+  Map<int?, List<AyahModel>> getAyahsByInputs({
     int? startJuz,
     int? endJuz,
     int? startQuarter,
@@ -57,11 +54,17 @@ class QuranHelper {
     Fimber.i('allMeta= ${allMeta!.references!.length}');
     if (startQuarter != null && endQuarter != null) {
       Fimber.i('## startQuarter != null ##');
+      if (startQuarter > endQuarter) {
+        final s1 = 'بدايه الربع';
+        final s2 = 'لا يجب ان تكون اكبر من نهايه الربع';
+
+        throw '$s1 ($startQuarter) $s2 ($endQuarter) ';
+      }
       /*
       for example =  startQuarter =1,  endQuarter= 1
       so we need
         start >> hizbQuarters[ 0 => startQuarter-1 ] and
-      end >>     hizbQuarters[ 1 => endQuarter]
+        end   >> hizbQuarters[ 1 => endQuarter]
       */
       var hizbQuarters = provider.quranMetaModel?.data?.hizbQuarters;
       startRef = hizbQuarters?.references![startQuarter - 1];
@@ -72,10 +75,14 @@ class QuranHelper {
       } else {
         endRef = References(surah: 114, ayah: 7);
       }
-      ;
     } else if (startJuz != null && endJuz != null) {
       Fimber.i('## startJuz != null ## ');
+      if (startJuz > endJuz) {
+        final s1 = 'بدايه الجزء';
+        final s2 = 'لا يجب ان تكون اكبر من نهايه الجزء';
 
+        throw '$s1 ($startJuz) $s2 ($endJuz) ';
+      }
       var juzs = provider.quranMetaModel?.data?.juzs;
       startRef = juzs?.references![startJuz - 1];
       if (endJuz != juzs?.count) {
@@ -84,6 +91,7 @@ class QuranHelper {
         endRef = References(surah: 114, ayah: 7);
       }
     } else {
+      Fimber.i('-');
       throw ('all parameters missing, at least juz must be provided ');
     }
     var allSurahs = provider.quranModel?.data?.surahs;
@@ -94,6 +102,7 @@ class QuranHelper {
     /* for example {"surah":1,"ayah":1}, endRef= {"surah":2,"ayah":26}
         position in list 0,1 >> subList[1-1 ,  2]
      */
+
     /// sublist of surah to get all surah that we should return ayahs of it
     var surahList = allSurahs.sublist(startRef!.surah! - 1, endRef!.surah!);
     log('surahList= n{jsonEncode(surahList)}');
@@ -103,6 +112,7 @@ class QuranHelper {
     for (var surahIndex = 0; surahIndex < surahListLen; surahIndex++) {
       var surahModel = surahList[surahIndex];
       Fimber.i('surahModel= ${surahModel.number}, ');
+      currentSurahIndex = surahModel.number;
       if (surahListLen == 1) {
         Fimber.i('## surahListLen == 1 , case##');
 
@@ -153,7 +163,7 @@ class QuranHelper {
         'finalFirsAyah= ${ayahs.first.text}, number= ${ayahs.first.numberInSurah}');
     Fimber.i(
         'finalLastAyah= ${ayahs.last.text}, number= ${ayahs.last.numberInSurah}');
-    return ayahs;
+    return {currentSurahIndex: ayahs};
   }
 
   /// todo: this  NOT used
@@ -187,10 +197,11 @@ class QuranHelper {
   }
 
   String getAyahPreview(AyahModel ayahModel) {
+    // Fimber.i('ayahModel= $ayahModel');
     var ayahWordList = ayahModel.text!.split(' ');
     var lastIndex = _getLatIndex(ayahWordList.length);
     var finalWordsList = ayahWordList.sublist(0, lastIndex);
-    print('finalArr= $finalWordsList');
+    // print('finalArr= $finalWordsList');
     return finalWordsList.join(' ');
   }
 
@@ -206,4 +217,9 @@ class QuranHelper {
         return 4;
     }
   }
+
+  Map<String, String> quarterAyahFromJson(String str) =>
+      Map.from(json.decode(str)).map(
+        (k, v) => MapEntry<String, String>(k, v),
+      );
 }

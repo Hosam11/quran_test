@@ -1,12 +1,8 @@
 import 'dart:convert';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quran_test/consts/dimens.dart';
-import 'package:quran_test/consts/strings.dart';
-import 'package:quran_test/consts/styles.dart';
 import 'package:quran_test/data/model/quran/ayah_model/ayah_model.dart';
 import 'package:quran_test/provider/quran_provider.dart';
 
@@ -32,7 +28,7 @@ class _TryScreenState extends State<TryScreen> {
       ),
       body: Column(
         children: [
-          Padding(
+          /* Padding(
             padding: const EdgeInsets.all(smallPadding),
             child: DropdownSearch<AyahModel>(
               items: updateQuranProvider?.ayahModels,
@@ -44,12 +40,10 @@ class _TryScreenState extends State<TryScreen> {
               onChanged: (newVal) => selectedAyahModel = newVal,
               selectedItem: selectedAyahModel,
               showAsSuffixIcons: true,
-              searchBoxDecoration:
-                  kTextFieldDecoration.copyWith(labelText: 'mHint'),
               emptyBuilder: (_, String? c) => Center(child: Text(entryError)),
               showClearButton: true,
             ),
-          )
+          )*/
         ],
       ),
     );

@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:quran_test/data/model/all_quran_model.dart';
 import 'package:quran_test/data/model/quran/quran_model.dart';

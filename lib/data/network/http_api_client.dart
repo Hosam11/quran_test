@@ -14,7 +14,6 @@ class HttpApiClient {
     required String path,
     Map<String, String>? header,
   }) async {
-    var head = '@@ $runtimeType @@ newGetRequest()';
     var response = await Dio().get(path);
 
     final statusCode = response.statusCode;

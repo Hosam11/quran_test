@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -17,6 +15,7 @@ class AyahModel extends Equatable {
   final int? ruku;
   final int? hizbQuarter;
   final dynamic sajda;
+  String? surahName;
 
   AyahModel({
     this.number,
@@ -28,6 +27,7 @@ class AyahModel extends Equatable {
     this.ruku,
     this.hizbQuarter,
     this.sajda,
+    this.surahName,
   });
 
   factory AyahModel.fromJson(Map<String, dynamic> json) =>
@@ -46,10 +46,10 @@ class AyahModel extends Equatable {
     return '$hizbQuarter - ${firAyahs.join(' ')}';
   }
 
-/*
   @override
-  String toString() => calcAyahWithQuarter() ?? 'empty to String';
-*/
+  String toString() {
+    return 'AyahModel{number: $number, text: $text, numberInSurah: $numberInSurah, juz: $juz, manzil: $manzil, page: $page, ruku: $ruku, hizbQuarter: $hizbQuarter, sajda: $sajda, surahName: $surahName}';
+  }
 
   @override
   List<Object?> get props => [
@@ -62,5 +62,6 @@ class AyahModel extends Equatable {
         ruku,
         hizbQuarter,
         sajda,
+        surahName,
       ];
 }

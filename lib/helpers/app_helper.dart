@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quran_test/consts/app_colors.dart';
+import 'package:quran_test/consts/dimens.dart';
+import 'package:quran_test/consts/styles.dart';
 
 /*void runAppSpector() {
   var apiKey = 'android_ZGE3YmY3MzMtODQ0NS00YmIyLThiMzQtNTAzZmZkMDkwNDJi';
@@ -30,6 +33,31 @@ Future<void> showInfoDialogue({
 }) {
   return showDialog(
     context: context,
-    builder: (_) => AlertDialog(content: Text(msg)),
+    builder: (_) => AlertDialog(
+      backgroundColor: kPrimaryColor,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(msg, style: TextStyle(color: Colors.white)),
+          const SizedBox(height: 12.0),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              primary: kSecondaryColor,
+              textStyle: btnTextStyle,
+              padding: EdgeInsets.symmetric(
+                horizontal: mediumPadding,
+                vertical: smallPadding,
+              ),
+            ),
+            // style: btnStyle.copyWith(
+            //
+            //   primary: kSecondaryColor,
+            // ),
+            child: Text('حسناً'),
+          ),
+        ],
+      ),
+    ),
   );
 }

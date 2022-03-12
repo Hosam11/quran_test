@@ -53,13 +53,14 @@ class Surahs {
   String? revelationType;
   List<Ayahs>? ayahs;
 
-  Surahs(
-      {this.number,
-      this.name,
-      this.englishName,
-      this.englishNameTranslation,
-      this.revelationType,
-      this.ayahs});
+  Surahs({
+    this.number,
+    this.name,
+    this.englishName,
+    this.englishNameTranslation,
+    this.revelationType,
+    this.ayahs,
+  });
 
   Surahs.fromJson(dynamic json) {
     number = json['number'];
@@ -98,7 +99,7 @@ class Ayahs {
   int? page;
   int? ruku;
   int? hizbQuarter;
-  dynamic? sajda;
+  dynamic sajda;
 
   Ayahs(
       {this.number,
